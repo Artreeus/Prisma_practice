@@ -13,7 +13,10 @@ model Post{
   title String
   content String
   published Boolean @default(false)
-  author String
-  createdAt 
+  author String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("Posts")
 }
 
