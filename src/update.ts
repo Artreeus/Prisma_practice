@@ -42,6 +42,8 @@ const updates = async () => {
     });
 
     console.log(upsertData)
+
+   
 };
 
 updates();

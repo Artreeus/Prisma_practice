@@ -1,22 +1,37 @@
 import { PrismaClient } from "@prisma/client";
 
-const Prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
 const main = async () => {
-  // Find All
+    // find all
+    const getAllFromDB = await prisma.post.findMany({
+        select: {
+            author: true
+        }
+    });
 
-  const getAllFromDb = await Prisma.post.findMany();
+    console.log("Get all data: ", getAllFromDB);
 
-//   find first and throw 
+    // find first and find first or throw error
+    const findFirst = await prisma.post.findFirstOrThrow({
+        where: {
+            published: false
+        }
+    });
 
-  const findFirst = await Prisma.post.findFirstOrThrow({
-    where:{
-        id:5
-    }
-  });
+    // find unique and find unique or throw error
+    const findUnique = await prisma.post.findUniqueOrThrow({
+        where: {
+            id: 9
+        },
+        select: {
+            title: true,
+            // content: true,
+            // authorName: true
+        }
+    })
 
-
-  console.log({findFirst});
-};
+    console.log({ findUnique })
+}
 
 main();
